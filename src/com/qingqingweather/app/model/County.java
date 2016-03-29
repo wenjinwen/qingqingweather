@@ -13,7 +13,7 @@ public class County {
 		this.id = id;
 	}
 	
-	public String getcountyName(){
+	public String getCountyName(){
 		return countyName;
 	}
 	public void setCountyName(String countyName){

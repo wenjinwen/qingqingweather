@@ -13,27 +13,27 @@ import android.database.sqlite.SQLiteDatabase;
 public class CoolWeatherDB {
 
 	/**
-	 * Êı¾İ¿âÃû
+	 * æ•°æ®åº“å
 	 */
 	public static final String DB_NAME = "cool_weather";
 	
 	/**
-	 * Êı¾İ¿â°æ±¾
+	 * æ•°æ®åº“ç‰ˆæœ¬
 	 */
 	public static final int VERSION = 1;
 	private static CoolWeatherDB coolWeatherDB;
 	private SQLiteDatabase db;
 	
 	/**
-	 * ½«¹¹Ôì·½·¨Ë½ÓĞ»¯
+	 * å°†æ„é€ æ–¹æ³•ç§æœ‰åŒ–
 	 */
 	private CoolWeatherDB(Context context){
 		CoolWeatherOpenHelper dbHelper = new CoolWeatherOpenHelper(context, DB_NAME, null, VERSION);
-		db = dbHelper.getReadableDatabase();
+		db = dbHelper.getWritableDatabase();
 	}
 	
 	/**
-	 * »ñÈ¡CoolWeatherDBµÄÊµÀı
+	 * è·å–CoolWeatherDBçš„å®ä¾‹
 	 */
 	public synchronized static CoolWeatherDB getInstance(Context context){
 		if(coolWeatherDB == null){
@@ -43,7 +43,7 @@ public class CoolWeatherDB {
 	}
 	
 	/**
-	 * ½«ProvinceÊµÀı´æ´¢µ½Êı¾İ¿â
+	 * å°†Provinceå®ä¾‹å­˜å‚¨åˆ°æ•°æ®åº“
 	 */
 	public void saveProvince(Province province){
 		if(province != null){
@@ -55,7 +55,7 @@ public class CoolWeatherDB {
 	}
 	
 	/**
-	 * ´ÓÊı¾İ¿â¶ÁÈ¡È«¹ú¸÷µØµÄÊ¡·İĞÅÏ¢
+	 * ä»æ•°æ®åº“è¯»å–å…¨å›½æ‰€æœ‰çš„çœä»½ä¿¡æ¯
 	 */
 	public List<Province> loadProvinces(){
 		List<Province> list = new ArrayList<Province>();
@@ -76,12 +76,12 @@ public class CoolWeatherDB {
 	}
 	
 	/**
-	 * ½«CityÊµÀı´æ´¢µ½Êı¾İ¿â
+	 * å°†Cityå®ä¾‹å­˜å‚¨åˆ°æ•°æ®åº“
 	 */
 	public void saveCity(City city){
 		if(city != null){
 			ContentValues values = new ContentValues();
-			values.put("city_name", city.getcityName());
+			values.put("city_name", city.getCityName());
 			values.put("city_code", city.getCityCode());
 			values.put("province_id", city.getProvinceId());
 			db.insert("City", null, values);
@@ -89,7 +89,7 @@ public class CoolWeatherDB {
 	}
 	
 	/**
-	 * ´ÓÊı¾İ¿â¶ÁÈ¡Ä³Ê¡ÏÂËùÓĞµÄ³ÇÊĞĞÅÏ¢
+	 * ä»æ•°æ®åº“è¯»å–æŸçœä¸‹çš„æ‰€æœ‰åŸå¸‚ä¿¡æ¯
 	 */
 	public List<City> loadCities(int provinceId){
 		List<City> list = new ArrayList<City>();
@@ -100,7 +100,7 @@ public class CoolWeatherDB {
 				City city = new City();
 				city.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
-				city.setCityCode(cursor.getString(cursor.getColumnIndex("city_name")));
+				city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
 				list.add(city);
 			}while (cursor.moveToNext());
 		}
@@ -111,12 +111,12 @@ public class CoolWeatherDB {
 	}
 
 	/**
-	 * ½«CountyÊµÀı´æ´¢µ½Êı¾İ¿â
+	 * å°†Countyå®ä¾‹å­˜å‚¨åˆ°æ•°æ®åº“
 	 */
 	public void saveCounty(County county){
 		if(county != null){
 			ContentValues values = new ContentValues();
-			values.put("county_name", county.getcountyName());
+			values.put("county_name", county.getCountyName());
 			values.put("county_code",county.getCountyCode());
 			values.put("city_id", county.getCityId());
 			db.insert("County", null, values);
@@ -124,7 +124,7 @@ public class CoolWeatherDB {
 	}
 
 	/**
-	 * ´ÓÊı¾İ¿âÏÂ¶ÁÈ¡Ä³³ÇÊĞÏÂËùÓĞÏØµÄĞÅÏ¢
+	 * ä»æ•°æ®åº“è¯»å–æŸåŸå¸‚ä¸‹æ‰€æœ‰çš„å¿ä¿¡æ¯
 	 */
 	public List<County> loadCounties(int cityId){
 		List<County> list = new ArrayList<County>();

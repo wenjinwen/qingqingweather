@@ -13,7 +13,7 @@ public class City {
 		this.id = id;
 	}
 	
-	public String getcityName(){
+	public String getCityName(){
 		return cityName;
 	}
 	public void setCityName(String cityName){
